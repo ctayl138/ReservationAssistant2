@@ -1,4 +1,4 @@
-package Framework;
+package reservationassistant2;
 import java.sql.*;
 
 public class Conn {
