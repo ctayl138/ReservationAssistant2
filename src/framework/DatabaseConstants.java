@@ -1,4 +1,4 @@
-package reservationassistant2;
+package framework;
 
 public interface DatabaseConstants {
 	//STORED PROCEDURE NAMES
