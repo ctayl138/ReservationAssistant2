@@ -2,8 +2,9 @@ package framework;
 import java.sql.*;
 import java.util.ArrayList;
 
-import DataObject.Reservation;
+import DataObject.*;
 import static framework.ObjectBuilder.getObjectBuilder;
+
 
 public class DatabaseController implements DatabaseConstants{
 	/** VARIABLE DECLARATIONS *************************/
@@ -295,22 +296,7 @@ public class DatabaseController implements DatabaseConstants{
 		return rs;
 	}
         
-        public Reservation createReservation(ResultSet rs){
-                Reservation r = null;
-		try{
-			String resName = rs.getString(DatabaseConstants.COLUMN_RES_NAME);
-			int partySize = rs.getInt(DatabaseConstants.COLUMN_PARTY_SIZE);
-                        String day = rs.getString(DatabaseConstants.COLUMN_DAY);
-			String hour = rs.getString(DatabaseConstants.COLUMN_HOUR);
-			String tableName = rs.getString(DatabaseConstants.COLUMN_TABLE_NAME);
-                        String resAcc = rs.getString(DatabaseConstants.COLUMN_RES_ACC);
-                        String month = rs.getString(DatabaseConstants.COLUMN_MONTH);
-			r = new Reservation(resName,partySize,month,day,hour,tableName,resAcc);
-		}catch (SQLException e){
-			e.printStackTrace();
-		}
-		return r;
-        }
+   
         
 	public void executeCUDStoredProcedure(String procName, ArrayList<NameValuePair> nvpList) {
 		/**
@@ -374,17 +360,19 @@ public class DatabaseController implements DatabaseConstants{
                 nvpList.add(new NameValuePair(COLUMN_TABLE_NAME, r.getTableName()));
                 nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
                 nvpList.add(new NameValuePair(COLUMN_MONTH, r.getMonth()));
-		rs = executeStoredProcedure(SP_CHECK_RESERVATION, nvpList);
+		rs = executeStoredProcedure(SP_CHECK_AVAILABILITY, nvpList);
 		try {
 			if (rs.next()){
-				res = createReservation(rs);
+				res = getObjectBuilder().createReservation(rs);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return res;
-
 	}
-
+        
+        
+        
+        
 }
 

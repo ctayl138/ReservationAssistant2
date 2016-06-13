@@ -15,21 +15,21 @@ public class ObjectBuilder {
 		return objBuilder;
 	}
 	
-	public Reservation createCustomer(ResultSet rs){
-		Reservation r = null;
+	public Reservation createReservation(ResultSet rs){
+                Reservation r = null;
 		try{
 			String resName = rs.getString(DatabaseConstants.COLUMN_RES_NAME);
-			String resAcc = rs.getString(DatabaseConstants.COLUMN_RES_ACC);
 			int partySize = rs.getInt(DatabaseConstants.COLUMN_PARTY_SIZE);
                         String day = rs.getString(DatabaseConstants.COLUMN_DAY);
-                        String hour   = rs.getString(DatabaseConstants.COLUMN_HOUR);
-                        String tableName = rs.getString(DatabaseConstants.COLUMN_TABLE_NAME);
+			String hour = rs.getString(DatabaseConstants.COLUMN_HOUR);
+			String tableName = rs.getString(DatabaseConstants.COLUMN_TABLE_NAME);
+                        String resAcc = rs.getString(DatabaseConstants.COLUMN_RES_ACC);
                         String month = rs.getString(DatabaseConstants.COLUMN_MONTH);
-			r = new Reservation(resName, partySize, day, month, hour, tableName, resAcc);
+			r = new Reservation(resName,partySize,month,day,hour,tableName,resAcc);
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
 		return r;
-	}
+        }
 }
 

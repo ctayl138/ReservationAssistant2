@@ -6,6 +6,7 @@ public interface DatabaseConstants {
 	public static String SP_MAKE_RESERVATION = "procMkRes";
 	public static String SP_UPDATE_RESERVATION = "procUpRes";
 	public static String SP_DELETE_RESERVATION = "procDelRes";
+        public static String SP_CHECK_AVAILABILITY = "procAvail";
 	
 	//COLUMN NAMES
 	public static String COLUMN_RES_NAME = "resName";
