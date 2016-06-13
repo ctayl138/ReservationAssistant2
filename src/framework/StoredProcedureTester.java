@@ -11,28 +11,25 @@ public class StoredProcedureTester {
 		 */
 		DatabaseController dbc = DatabaseController.getDBController();
 		
-		//Test the getCarByID() method
-	//	System.out.println("Testing getCarByID() stored procedure");
-		//dbc.printResultSet(dbc.getCarByID("EQV536NJH730J"));
-	//	System.out.println("");
 		
-		//Test the getCarsByPriceRange(lowVal, highVal method
-		//System.out.println("Testing getCarsByPriceRange(lowVal, highVal) stored procedure");
-		//dbc.printResultSet(dbc.getCarsByPriceRange(9000, 11000));
-		//System.out.println("");
-		//Test the addCustomer() method
-		System.out.println("Testing addCustomer() stored procedure");
-		Reservation r1 = new Reservation("Taylor", "Baby chair", 8, "June", "9", "8AM", "Outside 1"); 
+		System.out.println("Testing makeReservation() stored procedure");
+		Reservation r1 = new Reservation("Taylor", 8, "9", "8AM", "Outside 1", "Baby Chair", "June"); 
 		dbc.makeReservation(r1);
-
-		//Test the getCustomerByID() method
-		
-
-		//Test the updateCustomer() method
-		
-
-		//Test the deleteCustomer() method
-		
+                
+                System.out.println("Testing checkReservation() stored procedure"); 
+		Reservation res = dbc.checkReservation(r1);
+                System.out.println(res);
+                
+                System.out.println("Testing updateReservation() stored procedure");
+		Reservation r2 = new Reservation("Jones", 10, "5", "11AM", "bar 1", "Extra seat", "June");
+                if(dbc.checkReservation(r1) != null){
+                    dbc.deleteReservation(r1);
+                    dbc.makeReservation(r2);
+                }else{
+                    dbc.makeReservation(r2);
+                }
+		res = dbc.checkReservation(r2);
+                System.out.println(res);
 	}
 
 

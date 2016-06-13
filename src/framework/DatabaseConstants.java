@@ -11,11 +11,10 @@ public interface DatabaseConstants {
 	public static String COLUMN_RES_NAME = "resName";
         public static String COLUMN_RES_ACC = "resAcc";
         public static String COLUMN_PARTY_SIZE = "partySize";
+        public static String COLUMN_DAY = "day";
         public static String COLUMN_HOUR = "hour";
         public static String COLUMN_TABLE_NAME = "tableName";
-
-	//DATABASE NAMES
-	public static String DATABASE_MONTH = "month";
+	public static String COLUMN_MONTH = "month";
 }
 
 

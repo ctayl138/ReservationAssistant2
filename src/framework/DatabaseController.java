@@ -3,6 +3,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import DataObject.Reservation;
+import static framework.ObjectBuilder.getObjectBuilder;
 
 public class DatabaseController implements DatabaseConstants{
 	/** VARIABLE DECLARATIONS *************************/
@@ -117,7 +118,7 @@ public class DatabaseController implements DatabaseConstants{
 	/** DATABASE CONNECTION CODE **********************/
 	private Connection createDatabaseConnection() {
 		Connection conn = null;
-		String connectString = "jdbc:sqlserver://reservations.database.windows.net:1433;database=Reservations;user=opprobrious@reservations;password=13ANGels!!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30";
+		String connectString = "jdbc:sqlserver://reservations.database.windows.net:1433;database=Reservation;user=opprobrious@reservations;password=13ANGels!!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30";
 		//First, we make sure the Driver exists
 		try {
 			Class.forName(getDriverClass());
@@ -135,7 +136,7 @@ public class DatabaseController implements DatabaseConstants{
 			StringBuffer buf = new StringBuffer();
 			buf.append("There was a problem with the following connection string: ");
 			buf.append(connectString);
-			buf.append("\n\nHere is the exceptio:\n");
+			buf.append("\n\nHere is the exception:\n");
 			buf.append(e.toString());
 			System.out.println(buf.toString());
 			System.exit(0);
@@ -293,6 +294,24 @@ public class DatabaseController implements DatabaseConstants{
 		}
 		return rs;
 	}
+        
+        public Reservation createReservation(ResultSet rs){
+                Reservation r = null;
+		try{
+			String resName = rs.getString(DatabaseConstants.COLUMN_RES_NAME);
+			int partySize = rs.getInt(DatabaseConstants.COLUMN_PARTY_SIZE);
+                        String day = rs.getString(DatabaseConstants.COLUMN_DAY);
+			String hour = rs.getString(DatabaseConstants.COLUMN_HOUR);
+			String tableName = rs.getString(DatabaseConstants.COLUMN_TABLE_NAME);
+                        String resAcc = rs.getString(DatabaseConstants.COLUMN_RES_ACC);
+                        String month = rs.getString(DatabaseConstants.COLUMN_MONTH);
+			r = new Reservation(resName,partySize,month,day,hour,tableName,resAcc);
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return r;
+        }
+        
 	public void executeCUDStoredProcedure(String procName, ArrayList<NameValuePair> nvpList) {
 		/**
 		 * Calls the stored procedure passed in, sending it
@@ -319,49 +338,52 @@ public class DatabaseController implements DatabaseConstants{
 			e.printStackTrace();
 		}
 	}
-	
-	public void updateReservation(Reservation r){
-		ArrayList<NameValuePair> nvpList = new ArrayList<NameValuePair>();
-		nvpList.add(new NameValuePair(COLUMN_RES_NAME, r.getResName()));
-		nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
-		nvpList.add(new NameValuePair(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
-                nvpList.add(new NameValuePair(DATABASE_MONTH, r.getMonth()));
-		nvpList.add(new NameValuePair(COLUMN_HOUR, r.getHour()));
-                nvpList.add(new NameValuePair(COLUMN_TABLE_NAME, r.getTableName()));
-		executeCUDStoredProcedure(SP_UPDATE_RESERVATION, nvpList);
-	}
 
 	public void makeReservation(Reservation r){
 		ArrayList<NameValuePair> nvpList = new ArrayList<NameValuePair>();
 		nvpList.add(new NameValuePair(COLUMN_RES_NAME, r.getResName()));
-		nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
 		nvpList.add(new NameValuePair(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
-                nvpList.add(new NameValuePair(DATABASE_MONTH, r.getMonth()));
+                nvpList.add(new NameValuePair(COLUMN_DAY, r.getDay()));
 		nvpList.add(new NameValuePair(COLUMN_HOUR, r.getHour()));
                 nvpList.add(new NameValuePair(COLUMN_TABLE_NAME, r.getTableName()));
+                nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
+                nvpList.add(new NameValuePair(COLUMN_MONTH, r.getMonth()));
 		executeCUDStoredProcedure(SP_MAKE_RESERVATION, nvpList);
 	}
 
 	public void deleteReservation(Reservation r){
                 ArrayList<NameValuePair> nvpList = new ArrayList<NameValuePair>();
 		nvpList.add(new NameValuePair(COLUMN_RES_NAME, r.getResName()));
-		nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
 		nvpList.add(new NameValuePair(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
-                nvpList.add(new NameValuePair(DATABASE_MONTH, r.getMonth()));
+                nvpList.add(new NameValuePair(COLUMN_DAY, r.getDay()));
 		nvpList.add(new NameValuePair(COLUMN_HOUR, r.getHour()));
                 nvpList.add(new NameValuePair(COLUMN_TABLE_NAME, r.getTableName()));
+                nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
+                nvpList.add(new NameValuePair(COLUMN_MONTH, r.getMonth()));
 		executeCUDStoredProcedure(SP_DELETE_RESERVATION, nvpList);
 	}
         
-        public void checkReservation(Reservation r){
+        public Reservation checkReservation(Reservation r){
+                Reservation res = null;
+                ResultSet rs = null;
                 ArrayList<NameValuePair> nvpList = new ArrayList<NameValuePair>();
 		nvpList.add(new NameValuePair(COLUMN_RES_NAME, r.getResName()));
-		nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
 		nvpList.add(new NameValuePair(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
-                nvpList.add(new NameValuePair(DATABASE_MONTH, r.getMonth()));
+                nvpList.add(new NameValuePair(COLUMN_DAY, r.getDay()));
 		nvpList.add(new NameValuePair(COLUMN_HOUR, r.getHour()));
                 nvpList.add(new NameValuePair(COLUMN_TABLE_NAME, r.getTableName()));
-		executeCUDStoredProcedure(SP_DELETE_RESERVATION, nvpList);
+                nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
+                nvpList.add(new NameValuePair(COLUMN_MONTH, r.getMonth()));
+		rs = executeStoredProcedure(SP_CHECK_RESERVATION, nvpList);
+		try {
+			if (rs.next()){
+				res = createReservation(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+
 	}
 
 }

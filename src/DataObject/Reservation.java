@@ -29,7 +29,7 @@ public class Reservation {
         tableName = null;
     }
 
-    public Reservation(String resName, String resAcc, int partySize, String month, String day, String hour, String tableName) {
+    public Reservation(String resName, int partySize, String day, String hour, String tableName, String resAcc, String month) {
         this.resName = resName;
         this.resAcc = resAcc;
         this.partySize = partySize;
@@ -93,6 +93,11 @@ public class Reservation {
 
     public void setDay(String day) {
         this.day = day;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" + "resName=" + resName + ", resAcc=" + resAcc + ", partySize=" + partySize + ", month=" + month + ", day=" + day + ", hour=" + hour + ", tableName=" + tableName + '}';
     }
     
     
