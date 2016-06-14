@@ -25,7 +25,8 @@ public class ObjectBuilder {
 			String tableName = rs.getString(DatabaseConstants.COLUMN_TABLE_NAME);
                         String resAcc = rs.getString(DatabaseConstants.COLUMN_RES_ACC);
                         String month = rs.getString(DatabaseConstants.COLUMN_MONTH);
-			r = new Reservation(resName,partySize,day,hour,tableName,resAcc,month);
+                        int    ID    = rs.getInt(DatabaseConstants.COLUMN_ID);
+			r = new Reservation(resName,partySize,day,hour,tableName,resAcc,month,ID);
 		}catch (SQLException e){
 			e.printStackTrace();
 		}

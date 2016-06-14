@@ -5,7 +5,6 @@
  */
 package reservationassistant2;
 import DataObject.Reservation;
-import framework.Conn;
 import framework.DatabaseConstants;
 import framework.DatabaseController;
 import framework.Months;
@@ -69,6 +68,8 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         jList1 = new javax.swing.JList();
         jLabel7 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -152,11 +153,6 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
 
         jLabel6.setText("Party Name:");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jList1);
 
         jLabel7.setText("Current Reservations");
@@ -167,6 +163,8 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
                 jButton11ActionPerformed(evt);
             }
         });
+
+        jLabel8.setText("ID:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -239,13 +237,19 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField4))))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField4)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -285,7 +289,11 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel6)))
-                        .addGap(119, 119, 119)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(96, 96, 96)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -319,11 +327,12 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
                             .addComponent(jButton9)
                             .addComponent(jButton10)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton22)
-                            .addComponent(jButton25)
-                            .addComponent(jButton28)
-                            .addComponent(jButton11))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton11)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton22)
+                                .addComponent(jButton25)
+                                .addComponent(jButton28)))
                         .addGap(9, 9, 9)
                         .addComponent(jLabel5)))
                 .addGap(0, 18, Short.MAX_VALUE))
@@ -344,7 +353,7 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         String month = m.getMonth(jCalendar1.getMonthChooser().getMonth()+ 1);
         
         DatabaseController dbc = DatabaseController.getDBController();
-        Reservation r1 = new Reservation("test", 0, day, hour, tableName, "test", month); 
+        Reservation r1 = new Reservation("test", 0, day, hour, tableName, "test", month, 0); 
 	result = dbc.checkReservation(r1);
         
         if(dbc.checkReservation(r1) != null){
@@ -356,6 +365,7 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         jTextField4.setText(result.getResName());
         jTextField3.setText(Integer.toString(result.getPartySize()));
         jTextField2.setText(result.getResAcc());
+        jTextField5.setText(Integer.toString(result.getID()));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -367,9 +377,10 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         String tableName = jComboBox2.getSelectedItem().toString();
         String resAcc = jTextField2.getText();
         String month = m.getMonth(jCalendar1.getMonthChooser().getMonth()+ 1);
+        int ID = 0;
         
         DatabaseController dbc = DatabaseController.getDBController();
-        Reservation r1 = new Reservation(resName, partySize, day, hour, tableName, resAcc, month); 
+        Reservation r1 = new Reservation(resName, partySize, day, hour, tableName, resAcc, month, ID); 
 	dbc.makeReservation(r1);
         
         if(dbc.checkReservation(r1) != null){
@@ -389,9 +400,10 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         String tableName = jComboBox2.getSelectedItem().toString();
         String resAcc = jTextField2.getText();
         String month = m.getMonth(jCalendar1.getMonthChooser().getMonth()+ 1);
+        int ID = 0;
         
         DatabaseController dbc = DatabaseController.getDBController();
-        Reservation r1 = new Reservation(resName, partySize, day, hour, tableName, resAcc, month); 
+        Reservation r1 = new Reservation(resName, partySize, day, hour, tableName, resAcc, month, ID); 
 	dbc.deleteReservation(r1);
         
         if(dbc.checkReservation(r1) != null){
@@ -476,11 +488,13 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

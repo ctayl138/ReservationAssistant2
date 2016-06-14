@@ -18,6 +18,7 @@ public class Reservation {
     private String day;
     private String hour;
     private String tableName;
+    private int ID;
     
     public Reservation (){
         resName = null;
@@ -27,9 +28,10 @@ public class Reservation {
         day = null;
         hour = null;
         tableName = null;
+        ID = 0;
     }
 
-    public Reservation(String resName, int partySize, String day, String hour, String tableName, String resAcc, String month) {
+    public Reservation(String resName, int partySize, String day, String hour, String tableName, String resAcc, String month, int ID) {
         this.resName = resName;
         this.resAcc = resAcc;
         this.partySize = partySize;
@@ -37,6 +39,7 @@ public class Reservation {
         this.day = day;
         this.hour = hour;
         this.tableName = tableName;
+        this.ID = ID;
     }
 
     public String getResName() {
@@ -95,10 +98,16 @@ public class Reservation {
         this.day = day;
     }
 
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
     @Override
     public String toString() {
         return "Reservation{" + "resName=" + resName + ", resAcc=" + resAcc + ", partySize=" + partySize + ", month=" + month + ", day=" + day + ", hour=" + hour + ", tableName=" + tableName + '}';
     }
-    
-    
 }

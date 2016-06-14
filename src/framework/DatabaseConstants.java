@@ -16,6 +16,7 @@ public interface DatabaseConstants {
         public static String COLUMN_HOUR = "hour";
         public static String COLUMN_TABLE_NAME = "tableName";
 	public static String COLUMN_MONTH = "month";
+        public static String COLUMN_ID = "ID";
 }
 
 

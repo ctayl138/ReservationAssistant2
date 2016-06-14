@@ -119,7 +119,7 @@ public class DatabaseController implements DatabaseConstants{
 	/** DATABASE CONNECTION CODE **********************/
 	private Connection createDatabaseConnection() {
 		Connection conn = null;
-		String connectString = "jdbc:sqlserver://reservations.database.windows.net:1433;database=Reservation;user=**********@reservations;password=********;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30";
+		String connectString = "jdbc:sqlserver://reservations.database.windows.net:1433;database=Reservation;user=opprobrious@reservations;password=13ANGels!!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30";
 		//First, we make sure the Driver exists
 		try {
 			Class.forName(getDriverClass());
