@@ -7,7 +7,7 @@ public class Conn {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String url="jdbc:sqlserver://reservations.database.windows.net:1433;database=Reservation;user=opprobrious@reservations;password=13ANGels!!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30";
+		String url="jdbc:sqlserver://reservations.database.windows.net:1433;database=Reservation;user=********@reservations;password=********;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30";
 				try
 				{
 				//Loading the driver...
