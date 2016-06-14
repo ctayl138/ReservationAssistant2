@@ -365,7 +365,7 @@ public class DatabaseController implements DatabaseConstants{
 			if (rs.next()){
 				res = getObjectBuilder().createReservation(rs);
 			}
-		} catch (SQLException e) {
+                    } catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return res;
