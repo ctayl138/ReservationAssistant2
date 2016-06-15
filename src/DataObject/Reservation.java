@@ -5,6 +5,8 @@
  */
 package DataObject;
 
+import java.util.Objects;
+
 /**
  *
  * @author Leliel2
@@ -41,6 +43,50 @@ public class Reservation {
         this.tableName = tableName;
         this.ID = ID;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Reservation other = (Reservation) obj;
+        if (!Objects.equals(this.resName, other.resName)) {
+            return false;
+        }
+        if (!Objects.equals(this.resAcc, other.resAcc)) {
+            return false;
+        }
+        if (this.partySize != other.partySize) {
+            return false;
+        }
+        if (!Objects.equals(this.month, other.month)) {
+            return false;
+        }
+        if (!Objects.equals(this.day, other.day)) {
+            return false;
+        }
+        if (!Objects.equals(this.hour, other.hour)) {
+            return false;
+        }
+        if (!Objects.equals(this.tableName, other.tableName)) {
+            return false;
+        }
+        if (this.ID != other.ID) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
     public String getResName() {
         return resName;
@@ -108,6 +154,8 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation{" + "resName=" + resName + ", resAcc=" + resAcc + ", partySize=" + partySize + ", month=" + month + ", day=" + day + ", hour=" + hour + ", tableName=" + tableName + '}';
+        return "Reservation: " + " Name: " + resName + ", Accomodations: " + resAcc + ", Party Size: " + partySize + ", Month: " + month + ", Day: " + day + ", Hour: " + hour + ", Table Name: " + tableName + ", ID: " + ID;
     }
+
+    
 }

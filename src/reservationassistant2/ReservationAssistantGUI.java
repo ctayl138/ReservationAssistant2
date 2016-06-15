@@ -16,11 +16,15 @@ import javax.swing.ListModel;
  */
 public class ReservationAssistantGUI extends javax.swing.JFrame {
 
+    
+    private final DefaultListModel list;
     /**
      * Creates new form ReservationAssistantGUI
      */
     public ReservationAssistantGUI() {
         initComponents();
+        list = new DefaultListModel();
+        jList1.setModel(list);
     }
 
     /**
@@ -382,16 +386,17 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         DatabaseController dbc = DatabaseController.getDBController();
         Reservation r1 = new Reservation(resName, partySize, day, hour, tableName, resAcc, month, ID); 
 	dbc.makeReservation(r1);
+        r1 = dbc.checkReservation(r1);
         
-        if(dbc.checkReservation(r1) != null){
+        if( r1 != null){
             jTextField1.setText("Reservation booked!");
+            list.addElement(r1.toString());
         }else{
             jTextField1.setText("Reservation failed!");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        DefaultListModel listModel = new DefaultListModel();
         Months m = new Months();
         String resName = jTextField4.getText();
         int partySize = Integer.parseInt(jTextField3.getText());
@@ -410,6 +415,11 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
             jTextField1.setText("Deletion Failed!");
         }else{
             jTextField1.setText("Deletion Successful!");
+            for(int i = 0; i < list.getSize(); i++){
+                if(r1.equals(list.getElementAt(i))){
+                    list.removeElementAt(i);
+                }
+            }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
