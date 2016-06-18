@@ -8,6 +8,7 @@ import DataObject.Reservation;
 import framework.DatabaseConstants;
 import framework.DatabaseController;
 import framework.Months;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 /**
@@ -74,6 +75,8 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         jButton11 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,6 +160,11 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
 
         jLabel6.setText("Party Name:");
 
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jList1);
 
         jLabel7.setText("Current Reservations");
@@ -169,6 +177,15 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         });
 
         jLabel8.setText("ID:");
+
+        jButton12.setText("Delete this Reservation!");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
+        jButton13.setText("Hourly Table Availability");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -202,30 +219,7 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton25)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton28))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton23)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton26))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton24)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton27)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(138, 138, 138)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(50, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton11)
-                                .addGap(151, 151, 151))))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,6 +258,34 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(173, 173, 173))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(314, 314, 314)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton25)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton28))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton26))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton24)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton27))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(270, 270, 270)
+                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(158, 158, 158)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,7 +319,9 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(96, 96, 96)
+                        .addGap(40, 40, 40)
+                        .addComponent(jButton13)
+                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -331,14 +355,18 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
                             .addComponent(jButton9)
                             .addComponent(jButton10)))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton11)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton22)
-                                .addComponent(jButton25)
-                                .addComponent(jButton28)))
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel5)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jButton22)
+                                        .addComponent(jButton25)
+                                        .addComponent(jButton28))
+                                    .addComponent(jButton12))
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel5))
+                            .addComponent(jButton11))))
                 .addGap(0, 18, Short.MAX_VALUE))
         );
 
@@ -373,6 +401,7 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Reservation r2;
         Months m = new Months();
         String resName = jTextField4.getText();
         int partySize = Integer.parseInt(jTextField3.getText());
@@ -386,11 +415,11 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         DatabaseController dbc = DatabaseController.getDBController();
         Reservation r1 = new Reservation(resName, partySize, day, hour, tableName, resAcc, month, ID); 
 	dbc.makeReservation(r1);
-        r1 = dbc.checkReservation(r1);
+        r2 = dbc.checkReservation(r1);
         
-        if( r1 != null){
+        if( r1.equals(r2)){
             jTextField1.setText("Reservation booked!");
-            list.addElement(r1.toString());
+            list.addElement(r2);
         }else{
             jTextField1.setText("Reservation failed!");
         }
@@ -405,7 +434,7 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         String tableName = jComboBox2.getSelectedItem().toString();
         String resAcc = jTextField2.getText();
         String month = m.getMonth(jCalendar1.getMonthChooser().getMonth()+ 1);
-        int ID = 0;
+        int ID = Integer.parseInt(jTextField5.getText());
         
         DatabaseController dbc = DatabaseController.getDBController();
         Reservation r1 = new Reservation(resName, partySize, day, hour, tableName, resAcc, month, ID); 
@@ -415,21 +444,66 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
             jTextField1.setText("Deletion Failed!");
         }else{
             jTextField1.setText("Deletion Successful!");
-            for(int i = 0; i < list.getSize(); i++){
-                if(r1.equals(list.getElementAt(i))){
-                    list.removeElementAt(i);
-                }
-            }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Months m = new Months();
+        Reservation r2;
+        String resName = jTextField4.getText();
+        int partySize = Integer.parseInt(jTextField3.getText());
+        String day = Integer.toString(jCalendar1.getDayChooser().getDay());
+        String hour = jComboBox1.getSelectedItem().toString();
+        String tableName = jComboBox2.getSelectedItem().toString();
+        String resAcc = jTextField2.getText();
+        String month = m.getMonth(jCalendar1.getMonthChooser().getMonth()+ 1);
+        int ID = Integer.parseInt(jTextField5.getText());
         
+        DatabaseController dbc = DatabaseController.getDBController();
+        Reservation r1 = new Reservation(resName, partySize, day, hour, tableName, resAcc, month, ID); 
+	dbc.updateReservation(r1);
+        r2 = dbc.checkReservation(r1);
+        
+        jTextField1.setText("Update Successful!");
+        list.addElement(r2);
+        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
+        Months m = new Months();
+        ArrayList r2;
+        String resName = jTextField4.getText();
+        int partySize = Integer.parseInt(jTextField3.getText());
+        String day = Integer.toString(jCalendar1.getDayChooser().getDay());
+        String hour = jComboBox1.getSelectedItem().toString();
+        String tableName = jComboBox2.getSelectedItem().toString();
+        String resAcc = jTextField2.getText();
+        String month = m.getMonth(jCalendar1.getMonthChooser().getMonth()+ 1);
+        int ID = Integer.parseInt(jTextField5.getText());
+        
+        DatabaseController dbc = DatabaseController.getDBController();
+        Reservation r1 = new Reservation(resName, partySize, day, hour, tableName, resAcc, month, ID); 
+	r2 = dbc.getTodaysReservations(r1);
+      
+        
+        for(int i = 0; i < r2.size(); i++){
+            list.addElement(r2.get(i));
+        }
+        
     }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        int selectedIndex = jList1.getSelectedIndex();
+        
+        if (selectedIndex != -1) {
+                list.remove(selectedIndex);
+        }
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jList1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -471,6 +545,8 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;

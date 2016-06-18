@@ -336,6 +336,19 @@ public class DatabaseController implements DatabaseConstants{
                 nvpList.add(new NameValuePair(COLUMN_MONTH, r.getMonth()));
 		executeCUDStoredProcedure(SP_MAKE_RESERVATION, nvpList);
 	}
+        
+        public void updateReservation(Reservation r){
+		ArrayList<NameValuePair> nvpList = new ArrayList<NameValuePair>();
+		nvpList.add(new NameValuePair(COLUMN_RES_NAME, r.getResName()));
+		nvpList.add(new NameValuePair(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
+                nvpList.add(new NameValuePair(COLUMN_DAY, r.getDay()));
+		nvpList.add(new NameValuePair(COLUMN_HOUR, r.getHour()));
+                nvpList.add(new NameValuePair(COLUMN_TABLE_NAME, r.getTableName()));
+                nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
+                nvpList.add(new NameValuePair(COLUMN_MONTH, r.getMonth()));
+                nvpList.add(new NameValuePair(COLUMN_ID, Integer.toString(r.getID())));
+		executeCUDStoredProcedure(SP_UPDATE_RESERVATION, nvpList);
+	}
 
 	public void deleteReservation(Reservation r){
                 ArrayList<NameValuePair> nvpList = new ArrayList<NameValuePair>();
@@ -371,8 +384,27 @@ public class DatabaseController implements DatabaseConstants{
 		return res;
 	}
         
-        
-        
-        
+        public ArrayList getTodaysReservations(Reservation r){
+                ArrayList list = new ArrayList();
+                Reservation res = null;
+                ResultSet rs = null;
+                ArrayList<NameValuePair> nvpList = new ArrayList<NameValuePair>();
+		nvpList.add(new NameValuePair(COLUMN_RES_NAME, r.getResName()));
+		nvpList.add(new NameValuePair(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
+                nvpList.add(new NameValuePair(COLUMN_DAY, r.getDay()));
+		nvpList.add(new NameValuePair(COLUMN_HOUR, r.getHour()));
+                nvpList.add(new NameValuePair(COLUMN_TABLE_NAME, r.getTableName()));
+                nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
+                nvpList.add(new NameValuePair(COLUMN_MONTH, r.getMonth()));
+		rs = executeStoredProcedure(SP_GET_TODAYS_RES, nvpList);
+		try {
+			while (rs.next()){
+				list.add(getObjectBuilder().createReservation(rs));
+			}
+                    } catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }
 

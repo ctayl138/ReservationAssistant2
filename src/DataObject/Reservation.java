@@ -80,9 +80,6 @@ public class Reservation {
         if (!Objects.equals(this.tableName, other.tableName)) {
             return false;
         }
-        if (this.ID != other.ID) {
-            return false;
-        }
         return true;
     }
     
