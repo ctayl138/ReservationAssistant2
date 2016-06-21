@@ -160,11 +160,6 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
 
         jLabel6.setText("Party Name:");
 
-        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jList1MouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jList1);
 
         jLabel7.setText("Current Reservations");
@@ -383,6 +378,9 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         String tableName = jComboBox2.getSelectedItem().toString();
         String resAcc = jTextField2.getText();
         String month = m.getMonth(jCalendar1.getMonthChooser().getMonth()+ 1);
+        int ID;
+            
+            
         
         DatabaseController dbc = DatabaseController.getDBController();
         Reservation r1 = new Reservation("test", 0, day, hour, tableName, "test", month, 0); 
@@ -435,6 +433,8 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         String resAcc = jTextField2.getText();
         String month = m.getMonth(jCalendar1.getMonthChooser().getMonth()+ 1);
         int ID = Integer.parseInt(jTextField5.getText());
+        
+ 
         
         DatabaseController dbc = DatabaseController.getDBController();
         Reservation r1 = new Reservation(resName, partySize, day, hour, tableName, resAcc, month, ID); 
@@ -500,10 +500,6 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
                 list.remove(selectedIndex);
         }
     }//GEN-LAST:event_jButton12ActionPerformed
-
-    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jList1MouseClicked
 
     /**
      * @param args the command line arguments
