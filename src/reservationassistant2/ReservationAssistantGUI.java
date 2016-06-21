@@ -449,7 +449,6 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
         
         if( r1.equals(r2)){
             jTextField1.setText("Reservation booked!");
-            list.addElement(r2);
         }else{
             jTextField1.setText("Reservation failed!");
         }
