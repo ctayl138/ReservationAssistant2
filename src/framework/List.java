@@ -1,6 +1,6 @@
 package framework;
 
-public class NameValuePair {
+public class List {
 /**
  * Simple data object to hold a parameter name
  * and it's corresponding value, both as strings.
@@ -13,7 +13,7 @@ public class NameValuePair {
 	public String getValue() {
 		return value;
 	}
-	public NameValuePair(String aName, String aValue){
+	public List(String aName, String aValue){
 		this.name = aName;
 		this.value = aValue;
 	}

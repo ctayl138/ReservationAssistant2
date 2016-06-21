@@ -3,26 +3,19 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import DataObject.*;
-import static framework.ObjectBuilder.getObjectBuilder;
+import static framework.OBuilder.getObjectBuilder;
 
 
-public class DatabaseController implements DatabaseConstants{
-	/** VARIABLE DECLARATIONS *************************/
+public class Controller implements Constants{
 	private Connection dbConnection = null;
-	private String userName = null;
-	private String password = null;
-	private String databaseName = null;
-	private String databaseServerURL = null;
 	private String driverClass = null;
-	private String portNumber = null;
-	private static DatabaseController DBController = null;
-	private ObjectBuilder objectBuilder = null;
+	private static Controller DBController = null;
+	private OBuilder objectBuilder = null;
 	private DatabaseMetaData dbMetaData = null;
 
-	/** GETTERS AND SETTERS *************************/
-	private ObjectBuilder  getObjectBuilder(){
+	private OBuilder  getObjectBuilder(){
 		if (objectBuilder == null){
-			objectBuilder = ObjectBuilder.getObjectBuilder(); 
+			objectBuilder = OBuilder.getObjectBuilder(); 
 		}
 		return objectBuilder;
 	}
@@ -32,66 +25,18 @@ public class DatabaseController implements DatabaseConstants{
 		}
 		return dbConnection;
 	}
-	private String getUserName() {
-		if (userName == null){
-			userName = "sa";
-		}
-		return userName;
-	}
-	private String getPassword() {
-		if (password == null){
-			password = "itcs3160";
-		}
-		return password;
-	}
-	public String getDatabaseName() {
-		if (databaseName == null){
-			databaseName = "AutoDealer";
-		}
-		return databaseName;
-	}
-	private String getDatabaseServerURL() {
-		if (databaseServerURL == null){
-			databaseServerURL = "localhost";
-		}
-		return databaseServerURL;
-	}
 	private String getDriverClass() {
 		if (driverClass == null){
 			driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 		}
 		return driverClass;
 	}
-	private String getPortNumber() {
-		if (portNumber == null){
-			portNumber = "57491";
-		}
-		return portNumber;
-	}
-	public void resetDbConnection() {
-		this.dbConnection = null;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public void setDatabaseName(String databaseName) {
-		this.databaseName = databaseName;
-	}
-	public void setDatabaseServerURL(String databaseServerURL) {
-		this.databaseServerURL = databaseServerURL;
-	}
 	public void setDriverClass(String driverClass) {
 		this.driverClass = driverClass;
 	}
-	public void setPortNumber(String portNumber) {
-		this.portNumber = portNumber;
-	}
-	public static DatabaseController getDBController() {
+	public static Controller getDBController() {
 		if (DBController == null){
-			DBController = new DatabaseController();
+			DBController = new Controller();
 		}
 		return DBController;
 	}
@@ -105,15 +50,8 @@ public class DatabaseController implements DatabaseConstants{
 	}
 	
 	/** CONSTRUCTORS *************************/
-	private DatabaseController(){
-		/**
-		 * This constructor is defined as private so no one 
-		 * is able to create a new instance
-		 * of this class.  The static method getDBController() 
-		 * should be used instead.  This
-		 * will ensure all classes share the same instance of 
-		 * the database controller.
-		 */
+	private Controller(){
+		
 	}
 
 	/** DATABASE CONNECTION CODE **********************/
@@ -210,16 +148,11 @@ public class DatabaseController implements DatabaseConstants{
 				System.out.println();
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
 	public void printQueryResults(String query) {
-		/**
-		 * This method attempts to execute the query string passed in
-		 * and print out the results to the console.
-		 */
 		try {
 			Statement s = getDbConnection().createStatement();
 			ResultSet rs = s.executeQuery(query);
@@ -230,29 +163,9 @@ public class DatabaseController implements DatabaseConstants{
 		}
 	}
 	public static void main(String[] args) {
-		DatabaseController dbc = DatabaseController.getDBController();
-		ArrayList<String> dbNames = dbc.getDatabaseNames();
-		StringBuffer buf = new StringBuffer();
-		buf.append("The database server has the following databases:\n");
-		for (String dbName : dbNames){
-			buf.append(dbName);
-			buf.append("\n");
-		}
-		System.out.println(buf.toString());
-		ArrayList<String> tables = dbc.getTableNames();
-		buf = new StringBuffer();
-		buf.append("Database ");
-		buf.append(dbc.getDatabaseName());
-		buf.append(" has the following tables:\n");
-		for (String tableName : tables){
-			buf.append(tableName);
-			buf.append("\n");
-		}
-		System.out.println(buf.toString());
+		
 		
 	}
-	
-	/** DATA ACCESS CODE **/
 	
 	
 	public ResultSet executeQuery(String query){
@@ -268,7 +181,7 @@ public class DatabaseController implements DatabaseConstants{
 		return rs;
 	}
 
-	public ResultSet executeStoredProcedure(String procName, ArrayList<NameValuePair> nvpList) {
+	public ResultSet executeStoredProcedure(String procName, ArrayList<List> nvpList) {
 		/**
 		 * Calls the stored procedure passed in, sending it
 		 * the parameters passed in.  Returns the resulting ResultSet 
@@ -298,7 +211,7 @@ public class DatabaseController implements DatabaseConstants{
         
    
         
-	public void executeCUDStoredProcedure(String procName, ArrayList<NameValuePair> nvpList) {
+	public void executeCUDStoredProcedure(String procName, ArrayList<List> nvpList) {
 		/**
 		 * Calls the stored procedure passed in, sending it
 		 * the parameters passed in.  Should only be used for stored procs that create, update,
@@ -326,53 +239,53 @@ public class DatabaseController implements DatabaseConstants{
 	}
 
 	public void makeReservation(Reservation r){
-		ArrayList<NameValuePair> nvpList = new ArrayList<NameValuePair>();
-		nvpList.add(new NameValuePair(COLUMN_RES_NAME, r.getResName()));
-		nvpList.add(new NameValuePair(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
-                nvpList.add(new NameValuePair(COLUMN_DAY, r.getDay()));
-		nvpList.add(new NameValuePair(COLUMN_HOUR, r.getHour()));
-                nvpList.add(new NameValuePair(COLUMN_TABLE_NAME, r.getTableName()));
-                nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
-                nvpList.add(new NameValuePair(COLUMN_MONTH, r.getMonth()));
+		ArrayList<List> nvpList = new ArrayList<List>();
+		nvpList.add(new List(COLUMN_RES_NAME, r.getResName()));
+		nvpList.add(new List(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
+                nvpList.add(new List(COLUMN_DAY, r.getDay()));
+		nvpList.add(new List(COLUMN_HOUR, r.getHour()));
+                nvpList.add(new List(COLUMN_TABLE_NAME, r.getTableName()));
+                nvpList.add(new List(COLUMN_RES_ACC, r.getResAcc()));
+                nvpList.add(new List(COLUMN_MONTH, r.getMonth()));
 		executeCUDStoredProcedure(SP_MAKE_RESERVATION, nvpList);
 	}
         
         public void updateReservation(Reservation r){
-		ArrayList<NameValuePair> nvpList = new ArrayList<NameValuePair>();
-		nvpList.add(new NameValuePair(COLUMN_RES_NAME, r.getResName()));
-		nvpList.add(new NameValuePair(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
-                nvpList.add(new NameValuePair(COLUMN_DAY, r.getDay()));
-		nvpList.add(new NameValuePair(COLUMN_HOUR, r.getHour()));
-                nvpList.add(new NameValuePair(COLUMN_TABLE_NAME, r.getTableName()));
-                nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
-                nvpList.add(new NameValuePair(COLUMN_MONTH, r.getMonth()));
-                nvpList.add(new NameValuePair(COLUMN_ID, Integer.toString(r.getID())));
+		ArrayList<List> nvpList = new ArrayList<List>();
+		nvpList.add(new List(COLUMN_RES_NAME, r.getResName()));
+		nvpList.add(new List(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
+                nvpList.add(new List(COLUMN_DAY, r.getDay()));
+		nvpList.add(new List(COLUMN_HOUR, r.getHour()));
+                nvpList.add(new List(COLUMN_TABLE_NAME, r.getTableName()));
+                nvpList.add(new List(COLUMN_RES_ACC, r.getResAcc()));
+                nvpList.add(new List(COLUMN_MONTH, r.getMonth()));
+                nvpList.add(new List(COLUMN_ID, Integer.toString(r.getID())));
 		executeCUDStoredProcedure(SP_UPDATE_RESERVATION, nvpList);
 	}
 
 	public void deleteReservation(Reservation r){
-                ArrayList<NameValuePair> nvpList = new ArrayList<NameValuePair>();
-		nvpList.add(new NameValuePair(COLUMN_RES_NAME, r.getResName()));
-		nvpList.add(new NameValuePair(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
-                nvpList.add(new NameValuePair(COLUMN_DAY, r.getDay()));
-		nvpList.add(new NameValuePair(COLUMN_HOUR, r.getHour()));
-                nvpList.add(new NameValuePair(COLUMN_TABLE_NAME, r.getTableName()));
-                nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
-                nvpList.add(new NameValuePair(COLUMN_MONTH, r.getMonth()));
+                ArrayList<List> nvpList = new ArrayList<List>();
+		nvpList.add(new List(COLUMN_RES_NAME, r.getResName()));
+		nvpList.add(new List(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
+                nvpList.add(new List(COLUMN_DAY, r.getDay()));
+		nvpList.add(new List(COLUMN_HOUR, r.getHour()));
+                nvpList.add(new List(COLUMN_TABLE_NAME, r.getTableName()));
+                nvpList.add(new List(COLUMN_RES_ACC, r.getResAcc()));
+                nvpList.add(new List(COLUMN_MONTH, r.getMonth()));
 		executeCUDStoredProcedure(SP_DELETE_RESERVATION, nvpList);
 	}
         
         public Reservation checkReservation(Reservation r){
                 Reservation res = null;
                 ResultSet rs = null;
-                ArrayList<NameValuePair> nvpList = new ArrayList<NameValuePair>();
-		nvpList.add(new NameValuePair(COLUMN_RES_NAME, r.getResName()));
-		nvpList.add(new NameValuePair(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
-                nvpList.add(new NameValuePair(COLUMN_DAY, r.getDay()));
-		nvpList.add(new NameValuePair(COLUMN_HOUR, r.getHour()));
-                nvpList.add(new NameValuePair(COLUMN_TABLE_NAME, r.getTableName()));
-                nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
-                nvpList.add(new NameValuePair(COLUMN_MONTH, r.getMonth()));
+                ArrayList<List> nvpList = new ArrayList<List>();
+		nvpList.add(new List(COLUMN_RES_NAME, r.getResName()));
+		nvpList.add(new List(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
+                nvpList.add(new List(COLUMN_DAY, r.getDay()));
+		nvpList.add(new List(COLUMN_HOUR, r.getHour()));
+                nvpList.add(new List(COLUMN_TABLE_NAME, r.getTableName()));
+                nvpList.add(new List(COLUMN_RES_ACC, r.getResAcc()));
+                nvpList.add(new List(COLUMN_MONTH, r.getMonth()));
 		rs = executeStoredProcedure(SP_CHECK_AVAILABILITY, nvpList);
 		try {
 			if (rs.next()){
@@ -388,15 +301,38 @@ public class DatabaseController implements DatabaseConstants{
                 ArrayList list = new ArrayList();
                 Reservation res = null;
                 ResultSet rs = null;
-                ArrayList<NameValuePair> nvpList = new ArrayList<NameValuePair>();
-		nvpList.add(new NameValuePair(COLUMN_RES_NAME, r.getResName()));
-		nvpList.add(new NameValuePair(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
-                nvpList.add(new NameValuePair(COLUMN_DAY, r.getDay()));
-		nvpList.add(new NameValuePair(COLUMN_HOUR, r.getHour()));
-                nvpList.add(new NameValuePair(COLUMN_TABLE_NAME, r.getTableName()));
-                nvpList.add(new NameValuePair(COLUMN_RES_ACC, r.getResAcc()));
-                nvpList.add(new NameValuePair(COLUMN_MONTH, r.getMonth()));
+                ArrayList<List> nvpList = new ArrayList<List>();
+		nvpList.add(new List(COLUMN_RES_NAME, r.getResName()));
+		nvpList.add(new List(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
+                nvpList.add(new List(COLUMN_DAY, r.getDay()));
+		nvpList.add(new List(COLUMN_HOUR, r.getHour()));
+                nvpList.add(new List(COLUMN_TABLE_NAME, r.getTableName()));
+                nvpList.add(new List(COLUMN_RES_ACC, r.getResAcc()));
+                nvpList.add(new List(COLUMN_MONTH, r.getMonth()));
 		rs = executeStoredProcedure(SP_GET_TODAYS_RES, nvpList);
+		try {
+			while (rs.next()){
+				list.add(getObjectBuilder().createReservation(rs));
+			}
+                    } catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+        
+        public ArrayList getHourlyTables(Reservation r){
+                ArrayList list = new ArrayList();
+                Reservation res = null;
+                ResultSet rs = null;
+                ArrayList<List> nvpList = new ArrayList<List>();
+		nvpList.add(new List(COLUMN_RES_NAME, r.getResName()));
+		nvpList.add(new List(COLUMN_PARTY_SIZE, Integer.toString(r.getPartySize())));
+                nvpList.add(new List(COLUMN_DAY, r.getDay()));
+		nvpList.add(new List(COLUMN_HOUR, r.getHour()));
+                nvpList.add(new List(COLUMN_TABLE_NAME, r.getTableName()));
+                nvpList.add(new List(COLUMN_RES_ACC, r.getResAcc()));
+                nvpList.add(new List(COLUMN_MONTH, r.getMonth()));
+		rs = executeStoredProcedure(SP_GET_HOURLY_TABLES, nvpList);
 		try {
 			while (rs.next()){
 				list.add(getObjectBuilder().createReservation(rs));
