@@ -568,54 +568,57 @@ public class ReservationAssistantGUI extends javax.swing.JFrame {
       
         
         for (Object r21 : r2) {
-            switch (((Reservation) r21).getTableName()) {
-                case "Outside 1":
-                    jButton5.setBackground(Color.red);
-                    break;
-                case "Outside 2":
-                    jButton6.setBackground(Color.red);
-                    break;
-                case "Outside 3":
-                    jButton7.setBackground(Color.red);
-                    break;
-                case "Table 1":
-                    jButton20.setBackground(Color.red);
-                    break;
-                case "Table 2":
-                    jButton23.setBackground(Color.red);
-                    break;
-                case "Table 3":
-                    jButton26.setBackground(Color.red);
-                    break;
-                case "Table 4":
-                    jButton21.setBackground(Color.red);
-                    break;
-                case "Table 5":
-                    jButton24.setBackground(Color.red);
-                    break;
-                case "Table 6":
-                    jButton27.setBackground(Color.red);
-                    break;
-                case "Table 7":
-                    jButton22.setBackground(Color.red);
-                    break;
-                case "Table 8":
-                    jButton25.setBackground(Color.red);
-                    break;
-                case "Table 9":
-                    jButton28.setBackground(Color.red);
-                    break;
-                case "Bar 1":
-                    jButton8.setBackground(Color.red);
-                    break;
-                case "Bar 2":
-                    jButton9.setBackground(Color.red);
-                    break;
-                case "Bar 3":
-                    jButton10.setBackground(Color.red);
-                    break;
+            if(((Reservation) r21).getHour().equals(hour)){
+                                        switch (((Reservation) r21).getTableName()) {
+                                                case "Outside 1":
+                                                    jButton5.setBackground(Color.red);
+                                                    break;
+                                                case "Outside 2":
+                                                    jButton6.setBackground(Color.red);
+                                                    break;
+                                                case "Outside 3":
+                                                    jButton7.setBackground(Color.red);
+                                                    break;
+                                                case "Table 1":
+                                                    jButton20.setBackground(Color.red);
+                                                    break;
+                                                case "Table 2":
+                                                    jButton23.setBackground(Color.red);
+                                                    break;
+                                                case "Table 3":
+                                                    jButton26.setBackground(Color.red);
+                                                    break;
+                                                case "Table 4":
+                                                    jButton21.setBackground(Color.red);
+                                                    break;
+                                                case "Table 5":
+                                                    jButton24.setBackground(Color.red);
+                                                    break;
+                                                case "Table 6":
+                                                    jButton27.setBackground(Color.red);
+                                                    break;
+                                                case "Table 7":
+                                                    jButton22.setBackground(Color.red);
+                                                    break;
+                                                case "Table 8":
+                                                    jButton25.setBackground(Color.red);
+                                                    break;
+                                                case "Table 9":
+                                                    jButton28.setBackground(Color.red);
+                                                    break;
+                                                case "Bar 1":
+                                                    jButton8.setBackground(Color.red);
+                                                    break;
+                                                case "Bar 2":
+                                                    jButton9.setBackground(Color.red);
+                                                    break;
+                                                case "Bar 3":
+                                                    jButton10.setBackground(Color.red);
+                                                    break;
+                                        }
             }
         }
+        
     }//GEN-LAST:event_jButton13ActionPerformed
 
     /**
